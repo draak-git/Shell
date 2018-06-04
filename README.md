@@ -1,0 +1,1 @@
+脚本目录，包含windows于linux

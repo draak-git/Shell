@@ -1,0 +1,1000 @@
+l
+tar zxf x264-2014-03-31.tar.gz 
+cd x264-2014-03-31
+./configure --help
+./configure "--prefix=/usr/local" "--libdir=/usr/local/lib64" "--enable-shared" "--enable-static" "--enable-strip" "--enable-pic"
+yum install yasm
+./configure "--prefix=/usr/local" "--enable-shared" "--enable-static" "--enable-strip" "--enable-pic"
+cd ..
+l
+tar zxf gpac-2014-03-31.tar.gz 
+cd gpac
+l
+./configure --help
+./configure --prefix=/usr/local --enable-pic --strip 
+cd ..
+tar zxf lame-3.99.5.tar.gz 
+cd lame-3.99.5
+./configure --help
+./configure --prefix=/usr/local 
+make -j
+make install-strip
+cd ../x264-2014-03-31
+l
+cd ../gpac
+make distclean
+./configure --prefix=/usr/local --enable-pic --strip 
+yum search alsa
+yum install alsa-lib-devel
+./configure --prefix=/usr/local --enable-pic --strip 
+make -j20
+make install
+./configure --prefix=/usr/local --enable-pic
+make distclean
+./configure --prefix=/usr/local --enable-pic
+make -j20
+make install
+sync
+cd ../x264-2014-03-31
+./configure "--prefix=/usr/local" "--enable-shared" "--enable-static" "--enable-strip" "--enable-pic"
+./configure --help|grep mp4
+./configure --help
+make -j20
+make install
+ldconfig
+cd ..
+l
+tar zxf mplayer-2014-03-31.tar.gz 
+cd mplayer
+./configure --help
+./configure --prefix=/usr/local 
+./configure --help|grep lame
+make -j30
+make install
+cd ..
+l
+tar zxf faac-1.28.tar.bz2 
+tar jxf faac-1.28.tar.bz2 
+cd libfaa
+l
+cd faac-1.28
+./configure --help
+./configure --prefix=/usr/local  --with-mp4v2
+make -j
+make
+vi common/mp4v2/mpeg4ip.h 
+make clean
+make -j
+make
+vi common/mp4v2/mpeg4ip.h 
+make
+make clean
+make -j
+make install
+cd ..
+cd ddm
+cd ffmpeg
+vi config.log 
+./configure --help|grep aac
+./configure --help|grep strict
+ffmpeg --help
+ffmpeg --help|grep strict
+./configure --help|grep aac
+ffmpeg -h
+ffmpeg --help
+ffmpeg 
+ffmpeg -h full > 123
+vi 123 
+rm 123 
+l
+cd ..
+l
+rm -rf faac-1.28
+l
+sync
+l
+tar zxf yamdi-1.9.tar.gz 
+cd yamdi-1.9
+l
+make
+l
+strip -s yamdi
+cp yamdi /usr/local/bin/
+history|grep mencoder
+cd /data/
+mencoder AVSEQ04.wmv 1.flv 
+mencoder AVSEQ04.wmv -o 1.flv 
+-of lavf -oac lavc acodec=libmp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidx
+mencoder AVSEQ04.wmv -O 1.flv -of lavf -oac lavc acodec=libmp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidx
+mencoder AVSEQ04.wmv -O 1.flv -of lavf -oac lavc -lavcopts acodec=libmp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidx
+top
+cd /usr/local/
+l
+cd bin/
+l
+sync
+./MP4
+./MP4Box 
+dmesg|grep NUMA
+uname -a
+dmesg|grep -i NUMA
+cat /proc/cpuinfo 
+cat /proc/cpuinfo |grep -i numa
+cd /data/
+l
+scp root@192.168.0.201:/tbcdata/video/tbcwmv/A01/disk21/mpegav/AVSEQ04.wmv .
+l
+sync
+ffmpeg -i AVSEQ04.wmv -y -f mp4 -preset:v medium -profile:v high444 -tune:v film -r 24001/1001 -vcodec libx264 -acodec libfaac -b:v 200k -b:a 56k -ar 22050 -ac 2  -x264opts vbv-bufsize=10485760:vbv-maxrate=210:bitrate=200 -movflags +faststart 1.mp4
+ffmpeg -i AVSEQ04.wmv -y -f mp4 -preset:v medium -profile:v high444 -tune:v film -r 24001/1001 -vcodec libx264 -acodec aac -b:v 200k -b:a 56k -ar 22050 -ac 2  -x264opts vbv-bufsize=10485760:vbv-maxrate=210:bitrate=200 -movflags +faststart 1.mp4
+ffmpeg -i AVSEQ04.wmv -y -f mp4 -preset:v medium -profile:v high444 -tune:v film -r 24001/1001 -vcodec libx264 -acodec aac -strict -2 -b:v 200k -b:a 56k -ar 22050 -ac 2  -x264opts vbv-bufsize=10485760:vbv-maxrate=210:bitrate=200 -movflags +faststart 1.mp4
+l
+sync
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidx
+l
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidx
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc 
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050
+l
+cd src/
+l
+tar zxf dmapi-v2.2.12.tar.gz 
+cd dmapi-v2.2.12
+l
+vi Make
+vi Makefile 
+make
+make install
+make install-dev
+cd ../xfsprogs-v3.1.11
+./configure --help|grep dma
+yum search virt
+yum search kvm
+yum install qemu-kvm qemu-kvm-tools virt-manager
+man mencoder
+vim /boot/grub/grub.conf 
+ip addr
+cd /usr/local/
+l
+cd lib64/
+l
+cd ..
+cd bin/
+l
+cd /data/src/
+l
+tar jxf mp4v2-2.0.0.tar.bz2 
+cd mp4v2-2.0.0
+./configure --help
+./configure --prefix=/usr/local 
+make -j
+make install-strip
+sync
+cd ..
+l
+tar zxf xfsprogs-v3.1.11.tar.gz 
+cd xfsprogs-v3.1.11
+l
+vi Makefile 
+make
+yum search libtoolize
+yum search libtool
+yum install libtool
+make
+make install-strip
+make install
+make install-dev
+sync
+vi /etc/ld.so.conf
+vi /etc/ld.so.conf.d/local.conf
+ldconfig
+cd ..
+l
+cd ffmpeg
+./configure --help
+./configure --help|grep x264
+./configure --prefix=/usr/local 
+./configure --help|grep x264
+make distclean
+./configure --help|grep x264
+./configure --help|grep share
+./configure --prefix=/usr/local --enable-libx264 --enable-shared
+./configure --prefix=/usr/local --enable-libx264 --enable-shared --enable-gpl
+./configure --help|grep thread
+./configure --help|grep posi
+make -j50
+make install
+ldconfig
+cd ../mplayer
+./configure --help|grep ffm
+cd ..
+l
+sync
+tar zxf linux-firmware-2014-03-31.tar.gz 
+cd linux-firmware-2014-03-31
+;l
+l
+make
+make clean
+make install
+cd ..
+l
+df -h
+tar zxf v3.13.7.tar.gz -C /usr/src/
+l
+cd /usr/src
+l
+cp linux-3.12.6/.config .
+rm -rf linux-3.12.6/
+;
+l
+rm config 
+l
+rm linux 
+l
+cd v3.13.7/
+patch -p1 -R < ../kernel.diff 
+sync
+vi Makefile
+sync
+vi Makefile
+l
+make mrproper
+yum install ccache
+l
+make mrproper
+cp ../.config .
+make menuconfig
+vi .config
+make menuconfig
+vi .config
+make menuconfig
+cp .config ../
+make -j30
+make modules_install
+make install
+vi /etc/grub.conf 
+rpm -qa|grep kernel
+yum remove kernel-2.6.32-431.el6.x86_64 kernel-2.6.32-431.1.2.0.1.el6.x86_64
+cd ..
+lk
+l
+cd /data/
+l
+ffprobe AVSEQ04.wmv 
+l
+top
+mp4file --optimize 1.mp4 
+mp4tags -e Tony.Ho_hezitong@21tb.com 1.mp4 
+mp4file --optimize 1.mp4 
+l
+top
+sync
+top
+l
+md5sum 1.flv 
+top
+uname -a
+sync
+dmesg
+cd src/
+cd mplayer
+l
+vi config.log 
+make distclean
+--prefix=/usr/local
+./configure --help
+./configure --prefix=/usr/local 
+vi 1
+rm 1
+make distclean
+./configure --help|grep lame
+./configure --prefix=/usr/local --enable-mp3lame
+./configure --help|grep ffm
+make distclean
+./configure --prefix=/usr/local --enable-mp3lame --disable-ffmpeg_a --disable-ffmpeg_so
+./configure --help
+ldd /usr/local/bin/mencoder 
+./configure --help|grep x264
+make distclean
+./configure --help|grep lame
+./configure --prefix=/usr/local --disable-mp3lame
+./configure --prefix=/usr/local --disable-mp3lame 1> 123
+vi 123 
+cd /data/
+l
+history|grep mencoder
+vi src/mplayer/123 
+sync
+vi /etc/grub.conf 
+sync
+reboot
+l
+top
+parted 
+mkswap /dev/sda3
+vi /etc/fstab 
+top
+dmesg
+l
+df -h
+l
+cd /data/
+l
+rm 1.mp4 
+cd src/
+l
+cd ..
+l
+dmesg
+dmesg -c
+l
+sync
+cd src/
+l
+cd x264-2014-03-31
+l
+cd ..
+l
+dmesg
+ps aux
+top
+rpm -qa|grep salt
+pip -V
+l
+yum install sqlite-devel
+top
+swapon 
+swapon -a
+rop
+top
+sync
+l
+mv *z /usr/src/
+mv *2 /usr/src/
+l
+cd /usr/src
+l
+mkdir video
+mv *z video/
+mv *2 video/
+l
+cd video/
+l
+cd glusterfs-3.4.2
+l
+make distclean
+./configure 
+make -j
+make install
+ldconfig
+cd ..
+l
+sync
+dmesg
+dmesg -c
+l
+/etc/init.d/glusterd start
+cd /var/lib/glusterd/
+l
+cd ..
+l
+cd /
+setup
+chkconfig --add glusterd
+setup
+cd /var/lib/glusterd/
+l
+cd vols/
+l
+cd ../peers/
+l
+cd ..
+l
+cd ..
+l
+df -h
+cd /data/
+l
+cd src
+l
+cd ..
+cd /
+umount /data/
+mkfs.xfs 
+mkfs.xfs -L DATA /dev/DATA/data 
+mkfs.xfs -L DATA /dev/DATA/data  -f
+man mount
+mount /data/
+cd /data/
+l
+mkdir glusterfs
+l
+cd /
+dmesg
+dmesg -c
+cd /
+l
+cd /usr/src
+l
+cd v
+cd v3.13.7/
+l
+diff .config ../.config 
+make distclean
+cd ..
+l
+dmesg
+cd ..
+l
+sync
+df -h
+sync
+dmesg
+cd /etc/sysconfig/network-scripts/
+l
+df -h
+l
+ip addr
+vi ifcfg-em2 
+cp ifcfg-em1 ifcfg-em4
+vi ifcfg-em4
+/etc/init.d/network restart
+grep 10.0.2.1 *
+ip addr
+dmesg
+l
+df -h
+cd /opt/
+l
+cd rh/
+l
+cd ..
+cd /
+df -h
+l
+rpm -qa|grep super
+yum remove supervisor-2.1-8.el6.noarch
+pip install supervisord
+pip install supervisor
+rpm -qa|grep Mako
+rpm -qa|grep -i Mako
+dmesg
+df -h
+cd /data/
+l
+time dd if=/dev/zero of=123 bs=1M count=1024; time sync
+l
+rm 123 
+dmesg
+l
+dmesg
+l
+tail /var/log/messages
+l
+dmesg
+top
+man mencoder 
+dmesg
+l
+cd /usr/src/
+l
+cd video/
+l
+wget http://www.mplayerhq.hu/MPlayer/releases/mplayer-checkout-snapshot.tar.bz2
+rm mplayer-checkout-snapshot.tar.bz2 
+scp root@123.103.18.8:/root/mplayer* .
+tar jxf mplayer-checkout-snapshot.tar.bz2 
+l
+cd mplayer-checkout-2014-03-30/
+l
+./configure --help
+./configure --prefix=/usr/local 
+cd ..
+rm -rf mplayer-checkout-*
+l
+sync
+rm -rf glusterfs-3.4.2
+l
+sync
+df -h
+cd /data/
+l
+rm AVSEQ12.wmv 
+cd /temp/
+l
+dmesg
+uname -a
+sync
+dmesg
+ip addr
+cd /data/
+l
+history|grep mencoder
+mencoder AVSEQ04.wmv -O 1.flv -of lavf -oac lavc acodec=libmp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidx
+mencoder AVSEQ04.wmv -O 1.flv -of lavf -oac lavc acodec=libmp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidxmencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidx
+mencoder AVSEQ04.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidx
+l
+dmesg
+cd src/
+l
+wget http://download.gluster.org/pub/gluster/glusterfs/3.4/LATEST/glusterfs-3.4.2.tar.gz
+rm glusterfs-3.4.2.tar.gz 
+scp root@portal:/root/gluster*z .
+scp root@123.103.18.8:/root/gluster*z .
+tar zxf glusterfs-3.4.2.tar.gz 
+cd glusterfs-3.4.2
+./configure --help
+./configure --prefix=/usr/local 
+./configure --help|grep argp
+make -j20
+cd ..
+top
+cd /
+vi /etc/fstab 
+df -h
+vgdisplay 
+lvcreate -L +100G /dev/DATA/temp
+lvcreate -L +100G /dev/DATA -n temp
+mkfs.xfs /dev/DATA/temp 
+mkdir temp
+vi /etc/fstab 
+sync
+df -h
+mount /temp
+l
+mount
+sync
+dmesg
+dmesg -c
+sync
+rpm -qa|grep salt
+yum remove salt-minion-2014.1.0-1.el6.noarch salt-2014.1.0-1.el6.noarch
+pip install salt
+vi ~/.pip/pip.conf
+pip install salt
+sync
+dmesg
+df -h
+l
+sync
+dmesg
+vmstat 1
+cd /data/
+l
+scp root@sto1:/tbcdata/video/tbcwmv/A04/disk09/mpegav/AVSEQ12.wmv .
+scp root@192.168.0.201:/tbcdata/video/tbcwmv/A04/disk09/mpegav/AVSEQ12.wmv .
+l
+history|grep mencoder
+mencoder AVSEQ12.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni -forceidx
+mencoder AVSEQ12.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 -ni
+mencoder AVSEQ12.wmv -o 1.flv -of lavf -oac mp3lame -lameopts abr:br=56 -ovc lavc -lavcopts vcodec=flv:vbitrate=200:last_pred=5:dia=3:cmp=0:vb_strategy=1:mbd=2:mv0 -vf fixpts=fps=24000/1001,fixpts,harddup -sws 9 -ofps 24001/1001 -srate 22050 
+l
+rm 1.flv 
+l
+vi /etc/sysctl.conf 
+cd /etc/sysconfig/
+cd network-scripts/
+l
+vi ifcfg-em1
+vi ifcfg-em4
+vi ifcfg-em1
+w
+df -h
+top
+df -h
+ip addr
+reboot
+clear 
+ls
+clear 
+vim /etc/fstab 
+clear
+mkswap /dev/sda3 
+swapon /dev/sda3
+free -m
+clear 
+ip a
+vim /etc/sysconfig/network-scripts/ifcfg-em1 
+service network restart
+clear 
+cd /etc/sysconfig/network-scripts/
+clear 
+ls
+mv ifcfg-em1 ifcfg-eth0
+ls
+rm -rf ifcfg-em*
+ls
+vim ifcfg-eth0 
+service network restart
+vim ifcfg-eth0 
+ip a
+service network restart
+ip a
+clear 
+ip a
+cd /etc/sysconfig/network-scripts/
+ls
+mv ifcfg-eth0 ifcfg-p4p1
+vim ifcfg-p4p1 
+service network restart
+clear 
+pvcreate /dev/sda4 
+vgcreate DATA /dev/sda4
+vgdisplay 
+lvcreate -L 1.8T -n data DATA
+mkfs.ext4 /dev/DATA/data 
+cd 
+cd /web
+mkdir /web
+mount /dev/DATA/data /web
+df -Th
+vim /etc/ssh/sshd_config 
+service sshd restart
+ip a
+vim /etc/grub.conf 
+reboot
+clear
+ipa
+ip a
+clear 
+cd /web/
+ls
+tar -xf centos6.5_lbox3.0_20140514.tar.gz 
+ls
+cd backup_all_lbox 
+clear
+ls
+mkdir lbox
+cd lbox/
+mkidr flash
+mkdir flash
+mkdir kcjy
+mkdir shipin
+sl
+ls
+chown -R nobody.nobody kcjy
+ll
+rsync -av root@192.168.0.239:/etc/cneln.net /etc/
+cat /etc/cneln.net 
+chmod 755 /etc/cneln.net 
+ll /etc/cneln.net 
+vim /etc/cneln.net 
+rsync -av root@192.168.0.239:/etc/modprobe.d/net.conf /etc/
+mv /etc/net.conf /etc/modprobe.d/
+ll /etc/modprobe.d/net.conf 
+echo $LENG
+cat /etc/sysconfig/i18n 
+vim /etc/sysconfig/i18n 
+vim /etc/hosts
+cd /etc/sysconfig/network-scripts/
+ls
+cp ifcfg-p4p1 ifcfg-p4p0
+cp ifcfg-p4p1 ifcfg-p4p2
+vim ifcfg-p4p1 
+vim ifcfg-p4p0 
+vim ifcfg-p4p1 
+mv ifcfg-p4p2 ifcfg-bond0
+vim ifcfg-bond0 
+cd /web/
+ls
+mkdir src
+mv centos6.5_lbox3.0_20140514.tar.gz src/
+cd src/
+mv eln_asp_main_2289门课版.sql eln_asp_main_2289门.sql
+/web/mysql/bin/mysql -u root -pmysqltest123#@! eln_asp_main < eln_asp_main_2289门.sql 
+ps -ef | grep mysql
+/web/mysql/bin/mysqld_safe &
+ps -ef | grep mysql
+useradd mysql
+ln -s /web/ /db
+ls
+cd /
+ls
+ll
+/web/mysql/bin/mysqld_safe &
+ps -ef | grep mysql
+/web/mysql/bin/mysql -u root -pmysqltest123#@! eln_asp_main < eln_asp_main_2289门.sql 
+cd web/
+ls
+cd src/
+ls
+mv eln_asp_main_2289门.sql eln_asp_main_22289.sql
+/web/mysql/bin/mysql -uroot -pmysqltest123#@! eln_asp_main < eln_asp_main_22289.sql 
+reboot
+ip a
+vim /etc/cneln.net 
+cat /etc/rc.local 
+sh /etc/cneln.net 
+ip a
+clear
+cat /etc/rc.local 
+clear 
+cd /web/
+ls
+cat rc.local 
+clear 
+chmod 755 rc.local 
+ls
+cp rc.local /etc/
+cat /etc/rc.local 
+wq
+clear 
+cd src/
+ls
+echo $LENG
+echo $LANG
+clea
+clear 
+/web/mysql/bin/mysql -uroot -pmysqltest123#@! eln_asp_main < eln_asp_main_22289.sql 
+/web/mysql/bin/mysqld_safe &
+/web/mysql/bin/mysql -uroot -pmysqltest123#@! eln_asp_main < eln_asp_main_22289.sql 
+reboot
+ps -ef | grep mysql
+ps -ef | grep tomcat
+clear 
+reboot
+ip a
+cd /web/
+ls
+df -Th
+vim /etc/fstab 
+top
+mkswap /dev/sda3 
+swapon /dev/sda3
+top 
+pvs
+vgs
+lvs
+lvremove data
+lvs
+lvremove /dev/DATA/data
+lvs
+vgs
+vgremove DATA
+vgs
+pvs /dev/sda4 
+pvremove /dev/sda4 
+pvs
+reboot
+parted
+pvcreate /dev/sda4
+pvs
+vgcreate DATA /dev/sda4
+vgs
+vgdisplay 
+vgdisplay -l 468825 -n data DATA
+vgcreate -l 468825 -n data DATA
+lvcreate -l 468825 -n data DATA
+lvs
+ip a
+ping 192.168.1.221
+ping 192.168.0.201
+reboot 
+ip a
+df -Th
+cd /web/
+ls
+cd ..
+vim /etc/fstab 
+mkfs.ext4 /dev/DATA/data 
+ 
+reboot
+ip a
+cd /web/
+ls
+tar -xf centos6.5_lbox3.0_20140514.tar.gz 
+ip show table tel
+ip route show table tel
+ip a
+clear 
+ls
+mkdir lbox
+ls
+mkdir flash
+mkdir kcjy
+mkdir shipin
+ping 192.168.0.201
+ls
+mv shipin lbox/
+mv flash lbox/
+mv kcjy lbox/
+ls
+cd lbox/
+ll
+rsync -a root@192.168.0.201:/web/tbcdata/box/* /web/lbox/shipin/
+vim /root/.ssh/known_hosts 
+rsync -av root@192.168.0.201:/web/tbcdata/box/v2/* /web/lbox/shipin/ 
+rsync -a root@192.168.0.201:/web/tbcdata/box/* /web/lbox/shipin/ &>/dev/null
+ls
+ls shipin/
+cd ..
+ls
+clear 
+ls
+cd lbox/
+ls
+history | grep rsync
+rsync -av root@192.168.0.201:/web/tbcdata/box/v2/* /web/lbox/shipin/ $>/dev/null 
+rsync -av root@192.168.0.201:/web/tbcdata/box/v2/* /web/lbox/shipin/ &>/dev/null 
+rsync -av root@192.168.0.201:/web/tbcdata/kcjy/* /web/lbox/kcjy/ &>/dev/null 
+rsync -av root@192.168.0.201:/web/tbcdata/21tb/site/fileServer/UserFiles/21tb.com/courseImports/* /web/site/fileServer_web/UserFiles/21tb.com/courseImports/ &>/dev/null 
+rsync -av root@192.168.0.201:/web/tbcdata/box/v2_2/* /web/lbox/flash/ &>/dev/null 
+ps -ef | grep rsync
+cd /web/lbox/
+du -sh shipin
+cd shipin/
+ls
+killall ysync
+killall rsync
+ps -ef | grep rsync
+cd ..
+ls
+du -sh shipin
+rm -rf shipin/* 
+ls shipin/
+cd ..
+cd /web/
+cd lbox/
+cd shipin/
+ls
+ps -ef | grep rsync
+ls
+ps -ef | grep rsync
+cd ..
+ls
+cd shipin/
+ls
+cd ..
+ls
+du -sh 
+du sh kcjy
+du -sh kcjy
+ls
+cd ..
+ls
+cd site/
+ls
+cd fileServer_web/
+ls
+cd UserFiles/
+ls
+cd 21tb.com/
+ls
+cd courseImports/
+ls
+cd ..
+cd courseImports/
+pwd
+ps -ef | rsync
+ps -ef | grep rsync
+ls
+cd ..
+du -sh courseImports
+ip a
+df -Th
+cd /web/lbox/
+ls
+du -sh flash
+v root@192.168.0.201:/web/tbcdata/kcjy/* /web/lbox/kcjy/ &>/dev/null 
+rsync -av root@192.168.0.201:/web/tbcdata/21tb/site/fileServer/UserFiles/21tb.com/courseImports/* /web/site/fileServer_web/UserFiles/21tb.com/courseImports/ &>/dev/null 
+rsync -av root@192.168.0.201:/web/tbcdata/box/v2_2/* /web/lbox/flash/ &>/dev/null 
+ip a
+df _Th
+df -Th
+vim /etc/sysconfig/network-scripts/ifcfg-bond0 
+cd /web/
+ls
+cat /etc/cneln.net 
+vim /etc/cneln.net 
+bash /etc/cneln.net 
+ip a
+ip addr del 192.168.0.234/23 dev bond0
+ip a
+bash /etc/cneln.net 
+ip a
+clear 
+ls
+cd /web/
+ls
+cat /etc/rc.local 
+clear
+ps -ef | grep mysql/
+ps -ef | grep mysql
+mysql/bin/mysqld_safe $
+ps -ef | grep mysql
+mysql/bin/mysqld_safe &
+ps -ef | grep mysql
+/web/mysql/bin/mysql -uroot -pmysqltest123#@!
+clear
+ps -ef | grep tomcat
+cat /etc/rc.local 
+LANG=zh_CN.gb18030 LANGUAGE=zh_CN.gb18030 LC_ALL=zh_CN.gb18030 /web/tomcat6_8080/bin/startup.sh
+ps -ef | grep tomcat
+ls
+mkdir bak
+ls
+cd bak/
+ls
+/web/mysql/bin/mysqldump -uroot -pmysqltest123#@! eln_asp_main > eln_asp_main_20150629.sql
+ls
+du -sh eln_asp_main_20150629.sql 
+clear
+cat /etc/passwd | grep mysql
+ll /etc/rc.d/rc.local 
+cat /etc/hosts
+cat /etc/cneln.net 
+ll /etc/cneln.net 
+cat /etc/modprobe.d/net.conf 
+ll /etc/modprobe.d/net.conf 
+cd /etc/sysconfig/network-scripts/
+ls
+cat ifcfg-p4p0 
+cat ifcfg-p4p1 
+cat ifcfg-bond0 
+cat /etc/sysconfig/i18n 
+ifconfig 
+ps -ef | grep tomcat
+cat /etc/cneln.net 
+reboot 
+ip a
+ifconfig 
+ip a
+clear
+ifconfig 
+cd /web/ba
+cd /web/
+ls
+cd bak/
+ls
+cd ..
+ls
+cd lbox/
+ls
+cd kcjy/
+cd PTC033101
+ls
+cd html/
+ls
+cd ..
+cd /web/
+ls
+cd bak
+ls
+clear 
+ls
+/web/mysql/bin/mysqladmin -uroot -pmysqltest123#@! eln_new < eln_new1924_2289.sql 
+/web/mysql/bin/mysql -uroot -pmysqltest123#@! eln_new < eln_new1924_2289.sql 
+/web/mysql/bin/mysql -uroot -pmysqltest123#@!
+ip a
+ping 192.168.0.201
+ping 192.168.0.237
+  
+cd /etc/sysconfig/network-scripts/
+ls
+cat ifcfg-p4p0 
+cat ifcfg-p4p1
+passwd 
+ifconfig 
+ip a
+ip a
+ipa 
+ip a
+init 0
+date 
+data -s "9:33"
+date -s "9:33"
+date 
+hwclock -w
+date 
+hsi
+history 
+history -w history.txt

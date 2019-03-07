@@ -1,0 +1,643 @@
+*** General ***
+
+owner    = Peter Random
+contact  = some@address.nowhere
+mailhost = my.mail.host
+sendmail = /usr/sbin/sendmail
+imgcache = /usr/local/smokeping/cache
+imgurl   = cache
+datadir  = /usr/local/smokeping/data
+piddir  = /usr/local/smokeping/var
+cgiurl   = http://127.0.0.1/smokeping.cgi
+smokemail = /usr/local/smokeping/etc/smokemail.dist
+tmail = /usr/local/smokeping/etc/tmail.dist
+
+syslogfacility = local0
+*** Alerts ***
+to = alertee@address.somewhere
+from = smokealert@company.xy
+
++someloss
+type = loss
+pattern = >0%,*12*,>0%,*12*,>0%
+comment = loss 3 times  in a row
+
+*** Database ***
+
+step     = 50
+pings    = 20
+
+# consfn mrhb steps total
+
+AVERAGE  0.5   1  1008
+AVERAGE  0.5  12  4320
+    MIN  0.5  12  4320
+    MAX  0.5  12  4320
+AVERAGE  0.5 144   720
+    MAX  0.5 144   720
+    MIN  0.5 144   720
+
+*** Presentation ***
+charset = utf-8
+template = /usr/local/smokeping/etc/basepage.html.dist
+
++ charts
+
+menu = Charts
+title = The most interesting destinations
+
+++ stddev
+sorter = StdDev(entries=>4)
+title = Top Standard Deviation
+menu = Std Deviation
+format = Standard Deviation %f
+
+++ max
+sorter = Max(entries=>5)
+title = Top Max Roundtrip Time
+menu = by Max
+format = Max Roundtrip Time %f seconds
+
+++ loss
+sorter = Loss(entries=>5)
+title = Top Packet Loss
+menu = Loss
+format = Packets Lost %f
+
+++ median
+sorter = Median(entries=>5)
+title = Top Median Roundtrip Time
+menu = by Median
+format = Median RTT %f seconds
+
++ overview 
+
+width = 600
+height = 50
+range = 10h
+
++ detail
+
+width = 600
+height = 200
+unison_tolerance = 2
+
+"Last 3 Hours"    3h
+"Last 30 Hours"   30h
+"Last 10 Days"    10d
+"Last 400 Days"   400d
+
+#+ hierarchies
+#++ owner
+#title = Host Owner
+#++ location
+#title = Location
+
+*** Probes ***
+
++ FPing
+
+binary = /usr/sbin/fping
+
+*** Slaves ***
+secrets=/usr/local/smokeping/etc/smokeping_secrets.dist
++boomer
+display_name=boomer
+color=0000ff
+
++slave2
+display_name=another
+color=00ff00
+
+*** Targets ***
+
+probe = FPing
+
+menu = Top
+title = Network Latency Grapher
+remark = Welcome to the SmokePing website of xxx Company. \
+         Here you will learn all about the latency of our network.
+
++ Test
+menu= Targets
+#parents = owner:/Test/James location:/
+
+++ James
+
+menu = James
+title =James
+alerts = someloss
+slaves = boomer slave2
+host = james.address
+
+++ MultiHost
+
+menu = Multihost
+title = James and James as seen from Boomer
+host = /Test/James /Test/James~boomer
+
+#+ Mobile
++ YD_huabei
+menu = 移动-华北地区
+title = 移动-华北地区
+ 
+++ YD_beiing
+menu = 移动北京
+title = 移动北京-218.200.240.1
+host = 218.200.240.1
+ 
+++ YD_tianjin
+menu = 移动天津
+title = 移动天津-211.137.160.1
+host = 211.137.160.1
+ 
+++ YD_shijiazhuang
+menu = 移动石家庄
+title = 移动石家庄-218.207.64.1
+host = 218.207.64.1
+ 
+++ YD_taiyuan
+menu = 移动太原
+title = 移动太原-211.142.0.1
+host = 211.142.0.1
+ 
+++ YD_huabeibb
+menu = 移动华北骨干
+title = 移动华北骨干-211.136.67.101
+host = 211.136.67.101
+ 
++ YD_dongbei
+menu = 移动东北地区
+title = 移动东北地区
+ 
+++ YD_shenyang
+menu = 移动沈阳
+title = 移动沈阳-221.180.131.1
+host = 221.180.131.1
+ 
+++ YD_changchun
+menu = 移动长春
+title = 移动长春-211.141.71.1
+host = 211.141.71.1
+ 
++ YD_huadong
+menu = 移动华东地区
+title = 移动华东地区
+ 
+++ YD_huadongbb
+menu = 移动华东骨干
+title = 移动华东骨干-211.141.71.1
+host = 211.141.71.1
+ 
+++ YD_shanghai
+menu = 移动上海
+title = 移动上海-117.131.0.1
+host = 117.131.0.1
+ 
+++ YD_yantai
+menu = 移动烟台
+title = 移动烟台-211.137.206.113
+host = 211.137.206.113
+ 
+++ YD_hangzhou
+menu = 移动杭州
+title = 移动杭州-211.140.0.8
+host = 211.140.0.8
+ 
++ YD_zhongnan
+menu = 移动中南地区
+title = 移动中南地区
+ 
+++ YD_wuhan
+menu = 移动武汉
+title = 移动武汉-120.202.0.1
+host = 120.202.0.1
+ 
+++ YD_guangzhou
+menu = 移动广州
+title = 移动广州-211.136.192.6
+host = 211.136.192.6
+ 
++ YD_xibei
+menu = 移动西北地区
+title = 移动西北地区
+ 
+++ YD_xining
+menu = 移动西宁
+title = 移动西宁-111.12.255.29
+host = 111.12.255.29
+ 
+++ YD_yinchuan
+menu = 移动银川
+title = 移动银川-111.49.10.1
+host = 111.49.10.1
+ 
+++ YD_xian
+menu = 移动西安
+title = 移动西安-218.200.63.185
+host = 218.200.63.185
+ 
+#+ Unicom
++ UN_xibei
+menu = 联通西北地区
+title = 联通西北地区
+ 
+++ UN_lanzhou
+menu = 联通兰州
+title = 联通兰州-115.85.195.1
+host = 115.85.195.1
+ 
+++ UN_xian
+menu = 联通西安
+title = 联通西安-124.89.76.1
+host = 124.89.76.1
+ 
+++ UN_jiuquan
+menu = 联通酒泉
+title = 联通酒泉-221.7.43.1
+host = 221.7.43.1
+ 
++ UN_xinan
+menu = 联通西南地区
+title = 联通西南地区
+ 
+++ UN_xinanbb
+menu = 联通西南骨干
+title = 联通西南骨干-219.158.14.66
+host = 219.158.14.66
+ 
+++ UN_chongqing
+menu = 联通重庆
+title = 联通重庆-221.5.203.86
+host = 221.5.203.86
+ 
+++ UN_guiyang
+menu = 联通贵阳
+title = 联通贵阳-58.16.254.82
+host = 58.16.254.82
+ 
+++ UN_puer
+menu = 联通普洱
+title = 联通普洱-221.3.161.1
+host = 221.3.161.1
+ 
++ UN_zhongnan
+menu = 联通中南地区
+title = 联通中南地区
+ 
+++ UN_zhongnanbb
+menu = 联通中南骨干
+title = 联通中南骨干-219.158.112.46
+host = 219.158.112.46
+ 
+++ UN_kaifeng
+menu = 联通开封
+title = 联通开封-61.53.134.1
+host = 61.53.134.1
+ 
+++ UN_changsha
+menu = 联通长沙
+title = 联通长沙-58.20.127.238
+host = 58.20.127.238
+ 
+++ UN_nanning
+menu = 联通南宁
+title = 联通南宁-221.7.128.68
+host = 221.7.128.68
+ 
+++ UN_guangzhou
+menu = 联通广州
+title = 联通广州-221.4.66.66
+host = 221.4.66.66
+ 
+++ UN_wuhan
+menu = 联通武汉
+title = 联通武汉-220.249.123.31
+host = 220.249.123.31
+ 
+++ UN_zhengzhou
+menu = 联通郑州
+title = 联通郑州-222.137.161.254
+host = 222.137.161.254
+ 
++ UN_huadong
+menu = 联通华东地区
+title = 联通华东地区
+ 
+++ UN_shanghai
+menu = 联通上海
+title = 联通上海-58.246.48.1
+host = 58.246.48.1
+ 
+++ UN_hangzhou
+menu = 联通杭州
+title = 联通杭州-60.12.141.49
+host = 60.12.141.49
+ 
+++ UN_putian
+menu = 联通莆田
+title = 联通莆田-58.22.128.2
+host = 58.22.128.2
+ 
+++ UN_nanchang
+menu = 联通南昌
+title = 联通南昌-220.248.192.13
+host = 220.248.192.13
+ 
+++ UN_xiamen
+menu = 联通厦门
+title = 联通厦门-218.107.201.107
+host = 218.107.201.107
+ 
+++ UN_qingdao
+menu = 联通青岛
+title = 联通青岛-202.102.128.68
+host = 202.102.128.68
+ 
++ UN_dongbei
+menu = 联通东北地区
+title = 联通东北地区
+ 
+++ UN_dongbeibb
+menu = 联通东北骨干
+title = 联通东北骨干-219.158.105.234
+host = 219.158.105.234
+ 
+++ UN_shenyang
+menu = 联通沈阳
+title = 联通沈阳-60.16.84.177
+host = 60.16.84.177
+ 
+++ UN_jilin
+menu = 联通吉林
+title = 联通吉林-139.214.195.240
+host = 139.214.195.240
+ 
+++ UN_haerbin
+menu = 联通哈尔滨
+title = 联通哈尔滨-202.97.207.240
+host = 202.97.207.240
+ 
+++ UN_fushun
+menu = 联通抚顺
+title = 联通抚顺-60.18.95.1
+host = 60.18.95.1
+ 
++ UN_huabei
+menu = 联通华北地区
+title = 联通华北地区
+ 
+++ UN_huabeibb
+menu = 联通华北骨干
+title = 联通华北骨干-219.158.104.134
+host = 219.158.104.134
+ 
+++ UN_alashan
+menu = 联通阿拉善
+title = 联通阿拉善-1.24.64.1
+host = 1.24.64.1
+ 
+++ UN_shijiazhuang
+menu = 联通石家庄
+title = 联通石家庄-110.228.158.1
+host = 110.228.158.1
+ 
+++ UN_tianjin
+menu = 联通天津
+title = 联通天津-60.24.141.234
+host = 60.24.141.234
+ 
+++ UN_beijing
+menu = 联通北京
+title = 联通北京-125.34.224.1
+host = 125.34.224.1
+ 
+++ UN_datong
+menu = 联通大同
+title = 联通大同-118.72.100.1
+host = 118.72.100.1
+ 
+++ UN_tangshan
+menu = 联通唐山
+title = 联通唐山-60.2.61.88
+host = 60.2.61.88
+ 
+++ UN_changzhi
+menu = 联通长治
+title = 联通长治-60.220.216.97
+host = 60.220.216.97
+ 
+#+ Telecom
++ DX_huabei
+menu = 电信华北地区
+title = 电信华北地区
+ 
+++ DX_beijingbb
+menu = 电信北京骨干
+title = 电信北京骨干-180.149.128.1
+host = 180.149.128.1
+ 
+++ DX_beijing
+menu = 电信北京
+title = 电信北京-106.120.186.61
+host = 106.120.186.61
+ 
+++ DX_baotou
+menu = 电信包头
+title = 电信包头-1.180.80.5
+host = 1.180.80.5
+ 
+++ DX_changzhi
+menu = 电信长治
+title = 电信长治-59.48.47.5
+host = 59.48.47.5
+ 
+++ DX_tianjin
+menu = 电信天津
+title = 电信天津-202.97.79.202
+host = 202.97.79.202
+ 
+++ DX_chifeng
+menu = 电信赤峰
+title = 电信赤峰-123.178.241.2
+host = 123.178.241.2
+ 
+++ DX_zhangjiakou
+menu = 电信张家口
+title = 电信张家口-219.148.106.1
+host = 219.148.106.1
+ 
+++ DX_hebeibb
+menu = 电信河北骨干
+title = 电信河北骨干-218.30.102.126
+host = 218.30.102.126
+ 
+++ DX_chengde
+menu = 电信承德
+title = 电信承德-27.129.62.66
+host = 27.129.62.66
+ 
++ DX_dongbei
+menu = 电信东北地区
+title = 电信东北地区
+ 
+++ DX_baicheng
+menu = 电信白城
+title = 电信白城-123.172.195.1
+host = 123.172.195.1
+ 
+++ DX_shenyang
+menu = 电信沈阳
+title = 电信沈阳-219.148.224.170
+host = 219.148.224.170
+ 
+++ DX_haerbin
+menu = 电信哈尔滨
+title = 电信哈尔滨-112.100.4.130
+host = 112.100.4.130
+ 
++ DX_huadong
+menu = 电信华东地区
+title = 电信华东地区
+ 
+++ DX_hefei
+menu = 电信合肥
+title = 电信合肥-60.166.13.95
+host = 60.166.13.95
+ 
+++ DX_hangzhou
+menu = 电信杭州
+title = 电信杭州-183.136.237.178
+host = 183.136.237.178
+ 
+++ DX_nanchang
+menu = 电信南昌
+title = 电信南昌-220.175.137.1
+host = 220.175.137.1
+ 
+++ DX_yantai
+menu = 电信烟台
+title = 电信烟台-222.173.223.97
+host = 222.173.223.97
+ 
+++ DX_zhangzhou
+menu = 电信漳州
+title = 电信漳州-27.157.0.1
+host = 27.157.0.1
+ 
+++ DX_shanghai
+menu = 电信上海
+title = 电信上海-114.80.243.1
+host = 114.80.243.1
+ 
++ DX_zhongnan
+menu = 电信中南地区
+title = 电信中南地区
+ 
+++ DX_zhengzhou
+menu = 电信郑州
+title = 电信郑州-1.192.0.1
+host = 1.192.0.1
+ 
+++ DX_maoming
+menu = 电信茂名
+title = 电信茂名-59.34.114.65
+host = 59.34.114.65
+ 
+++ DX_changsha
+menu = 电信长沙
+title = 电信长沙-124.232.137.133
+host = 124.232.137.133
+ 
+++ DX_dongguan
+menu = 电信东莞
+title = 电信东莞-59.36.75.117
+host = 59.36.75.117
+ 
+++ DX_nanning
+menu = 电信南宁
+title = 电信南宁-171.107.80.102
+host = 171.107.80.102
+ 
+++ DX_haikou
+menu = 电信海口
+title = 电信海口-220.174.236.1
+host = 220.174.236.1
+ 
++ DX_xinan
+menu = 电信西南地区
+title = 电信西南地区
+ 
+++ DX_kunming
+menu = 电信昆明
+title = 电信昆明-116.53.255.34
+host = 116.53.255.34
+ 
+++ DX_chongqing
+menu = 电信重庆
+title = 电信重庆-14.106.255.31
+host = 14.106.255.31
+ 
+++ DX_chengdu
+menu = 电信成都
+title = 电信成都-61.139.2.69
+host = 61.139.2.69
+ 
+++ DX_zhidi
+menu = 电信芝地
+title = 电信芝地-202.98.246.129
+host = 202.98.246.129
+ 
+++ DX_yuxi
+menu = 电信玉溪
+title = 电信玉溪-222.220.206.1
+host = 222.220.206.1
+ 
++ DX_xibei
+menu = 电信西北地区
+title = 电信西北地区
+ 
+++ DX_lanzhou
+menu = 电信兰州
+title = 电信兰州-61.178.0.92
+host = 61.178.0.92
+ 
+++ DX_yinchuan
+menu = 电信银川
+title = 电信银川-61.133.192.17
+host = 61.133.192.17
+ 
+++ DX_kuerle
+menu = 电信库尔勒
+title = 电信库尔勒-222.83.32.6
+host = 222.83.32.6
+ 
+++ DX_wulumuqi
+menu = 电信乌鲁木齐
+title = 电信乌鲁木齐-61.128.111.1
+host = 61.128.111.1
+ 
+++ DX_yanan
+menu = 电信延安
+title = 电信延安-36.43.0.1
+host = 36.43.0.1
+
+ 
++ HuiZong
+menu = 汇总
+title = 汇总
+ 
+++ UN_HuiZong
+menu = 联通汇总
+title = 联通汇总
+host = /UN_xibei/UN_lanzhou /UN_xibei/UN_xian /UN_xibei/UN_jiuquan /UN_xinan/UN_xinanbb /UN_xinan/UN_chongqing /UN_xinan/UN_guiyang /UN_xinan/UN_puer /UN_zhongnan/UN_zhongnanbb /UN_zhongnan/UN_kaifeng /UN_zhongnan/UN_changsha /UN_zhongnan/UN_nanning /UN_zhongnan/UN_guangzhou /UN_zhongnan/UN_wuhan /UN_zhongnan/UN_zhengzhou /UN_huadong/UN_shanghai /UN_huadong/UN_hangzhou /UN_huadong/UN_putian /UN_huadong/UN_nanchang /UN_huadong/UN_xiamen /UN_huadong/UN_qingdao /UN_dongbei/UN_dongbeibb /UN_dongbei/UN_shenyang /UN_dongbei/UN_jilin /UN_dongbei/UN_haerbin /UN_dongbei/UN_fushun /UN_huabei/UN_huabeibb /UN_huabei/UN_alashan /UN_huabei/UN_shijiazhuang /UN_huabei/UN_tianjin /UN_huabei/UN_beijing /UN_huabei/UN_datong /UN_huabei/UN_tangshan /UN_huabei/UN_changzhi
+
+++ YD_HuiZong
+menu = 移动汇总
+title = 移动汇总
+host = /YD_huabei/YD_beiing /YD_huabei/YD_tianjin /YD_huabei/YD_shijiazhuang /YD_huabei/YD_taiyuan /YD_huabei/YD_huabeibb /YD_dongbei/YD_shenyang /YD_dongbei/YD_changchun /YD_huadong/YD_huadongbb /YD_huadong/YD_shanghai /YD_huadong/YD_yantai /YD_huadong/YD_hangzhou /YD_zhongnan/YD_wuhan /YD_zhongnan/YD_guangzhou /YD_xibei/YD_xining /YD_xibei/YD_yinchuan /YD_xibei/YD_xian
+
+++ DX_HuiZong
+menu = 电信汇总
+title = DX_HuiZong
+host = /DX_huabei/DX_beijingbb /DX_huabei/DX_beijing /DX_huabei/DX_baotou /DX_huabei/DX_changzhi /DX_huabei/DX_tianjin /DX_huabei/DX_chifeng /DX_huabei/DX_zhangjiakou /DX_huabei/DX_hebeibb /DX_huabei/DX_chengde /DX_dongbei/DX_baicheng /DX_dongbei/DX_shenyang /DX_dongbei/DX_haerbin /DX_huadong/DX_hefei /DX_huadong/DX_hangzhou /DX_huadong/DX_nanchang /DX_huadong/DX_yantai /DX_huadong/DX_zhangzhou /DX_huadong/DX_shanghai /DX_zhongnan/DX_zhengzhou /DX_zhongnan/DX_maoming /DX_zhongnan/DX_changsha /DX_zhongnan/DX_dongguan  /DX_zhongnan/DX_nanning /DX_zhongnan/DX_haikou /DX_xinan/DX_kunming /DX_xinan/DX_chongqing /DX_xinan/DX_chengdu /DX_xinan/DX_zhidi /DX_xinan/DX_yuxi /DX_xibei/DX_lanzhou /DX_xibei/DX_yinchuan /DX_xibei/DX_kuerle /DX_xibei/DX_wulumuqi /DX_xibei/DX_yanan

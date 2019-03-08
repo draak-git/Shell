@@ -1,4 +1,4 @@
-#coding:utf-8
+# -*- coding: utf-8 -*-
 import requests
 import rrdtool
 import os
@@ -41,8 +41,8 @@ paras = {
         'yunnan'        : '云南' ,
         'zhejiang'      : '浙江'
     } , 
-    'LOG_FILE' : '/tmp/smoking_pushgateway.log' , 
-    'prometheus_gateway' : 'http://192.168.56.101:9091' , 
+    'LOG_FILE' : '/var/log/monitoring/smoking_pushgateway.log' , 
+    'prometheus_gateway' : 'http://172.16.60.10:9091' , 
     'data_dir' : '/usr/local/smokeping/data'
 }
 
@@ -84,10 +84,10 @@ def getMonitorData(rrd_file):
 if __name__ == '__main__':
     ISP_list = ['TELCOM' , 'CMCC' , 'UNICOM' , 'TENCENT']
     for ISP in ISP_list:
-        rrd_data_dir = os.path.join(data_dir , ISP)
+        rrd_data_dir = os.path.join(paras['data_dir'] , ISP)
         for filename in os.listdir(rrd_data_dir):
             (instance , postfix) = os.path.splitext(filename)
             if postfix == '.rrd' :
-                (lost_package_num , rrt) = getMonitorData(os.path.join(data_dir , ISP , filename))
+                (lost_package_num , rrt) = getMonitorData(os.path.join(paras['data_dir'] , ISP , filename))
                 pushMetrics(instance , ISP , 'rrt' , rrt)
                 pushMetrics(instance , ISP , 'lost_package_num' , lost_package_num)
